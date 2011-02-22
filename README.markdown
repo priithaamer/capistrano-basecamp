@@ -1,0 +1,1 @@
+Capistrano plugin that posts change logs to Basecamp after deploy.
