@@ -30,3 +30,4 @@ If username and password are not provided in configuration, they will be asked o
  * `'auto'` -- message will be posted automatically
  * `'ask'` -- ask for user confirmation before posting each message
 * Add support for other SCM's than Git
+* Do not store basecamp account information in plain text in `~/.basecamp.capistrano`

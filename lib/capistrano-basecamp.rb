@@ -30,28 +30,28 @@ Capistrano::Configuration.instance(:must_exist).load do
         set :basecamp_host,   'mycompany.basecamp.com'
     DESC
     task :post_message do
-      basecamp_host = self.fetch(:basecamp_host)
-      logger.info "Posting message to Basecamp (#{basecamp_host})"
-      
       set(:git_final_sha, capture("cd #{release_path}; git rev-parse --verify HEAD").strip)
       
-      user_data = Hash.new
-      
-      if File.exists?(File.join(ENV['HOME'], '.basecamp.capistrano'))
-        user_data = YAML::load(File.read(File.join(ENV['HOME'], '.basecamp.capistrano'))).fetch(basecamp_host) rescue nil
-      end
-      
-      unless user_data
-        logger.info "Please enter your Basecamp username and password for #{basecamp_host} future reference"
-        user_data = {
-          :username => Capistrano::CLI.ui.ask("Username:").strip,
-          :password => Capistrano::CLI.ui.ask("Password:").strip
-        }
-        File.open(File.join(ENV['HOME'], '.basecamp.capistrano'), 'w') { |f| f.write({basecamp_host => user_data}.to_yaml) }
-        logger.debug "Your Basecamp credentials have been written to #{File.join(ENV['HOME'], '.basecamp.capistrano')}"
-      end
-      
       if git_initial_sha != git_final_sha
+        basecamp_host = self.fetch(:basecamp_host)
+        logger.info "Posting message to Basecamp (#{basecamp_host})"
+        
+        user_data = Hash.new
+        
+        if File.exists?(File.join(ENV['HOME'], '.basecamp.capistrano'))
+          user_data = YAML::load(File.read(File.join(ENV['HOME'], '.basecamp.capistrano'))).fetch(basecamp_host) rescue nil
+        end
+        
+        unless user_data
+          logger.info "Please enter your Basecamp username and password for #{basecamp_host} future reference"
+          user_data = {
+            :username => Capistrano::CLI.ui.ask("Username:").strip,
+            :password => Capistrano::CLI.ui.ask("Password:").strip
+          }
+          File.open(File.join(ENV['HOME'], '.basecamp.capistrano'), 'w') { |f| f.write({basecamp_host => user_data}.to_yaml) }
+          logger.debug "Your Basecamp credentials have been written to #{File.join(ENV['HOME'], '.basecamp.capistrano')}"
+        end
+      
         basecamp_username = self.fetch(:basecamp_username, user_data[:username])
         basecamp_password = self.fetch(:basecamp_password, user_data[:password])
         basecamp_ssl = self.fetch(:basecamp_ssl, true)
