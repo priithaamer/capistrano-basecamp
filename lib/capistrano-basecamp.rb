@@ -1,4 +1,5 @@
 require 'yaml'
+require 'basecamp'
 
 Capistrano::Configuration.instance(:must_exist).load do
 
