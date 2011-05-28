@@ -4,7 +4,11 @@ Currently, only Git SCM is supported. Before deploy, this plugin finds out the v
 
 ## Installation
 
-    gem install capistrano-basecamp
+Add capistrano-basecamp gem into Gemfile:
+
+    group :development do
+      gem 'capistrano-basecamp', :require => false
+    end
 
 In your capistrano recipe just require this plugin:
 
