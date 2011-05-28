@@ -36,7 +36,7 @@ Capistrano::Configuration.instance(:must_exist).load do
         basecamp_host = self.fetch(:basecamp_host)
         logger.info "Posting message to Basecamp (#{basecamp_host})"
         
-        user_data = Hash.new
+        user_data = nil
         
         if File.exists?(File.join(ENV['HOME'], '.basecamp.capistrano'))
           user_data = YAML::load(File.read(File.join(ENV['HOME'], '.basecamp.capistrano'))).fetch(basecamp_host) rescue nil
