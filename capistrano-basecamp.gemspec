@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   
   s.add_dependency(%q<xml-simple>)
-  s.add_dependency(%q<basecamp>, ["= 0.0.2"])
+  s.add_dependency(%q<basecamp>, ["~> 0.0.6"])
 end
